@@ -39,7 +39,7 @@ The project relies on a cutting-edge tech stack chosen for its robustness, scala
 
 ## 📅 PENJ Submission
 * **Category**: Technology and Digital.
-* **Submission Date**: July 9, 2024.
+* **Submission Date**: July 9, 2026.
 * **Vision**: *"No Chadian woman should walk through her pregnancy alone."*
 
 ---
