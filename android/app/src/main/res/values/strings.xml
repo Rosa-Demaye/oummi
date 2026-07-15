@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oummi</string>
+    <string name="dashboard_greeting">Bonjour,</string>
+    <string name="dashboard_user_name">Amira</string>
+    <string name="dashboard_phase_title">PHASE ACTUELLE</string>
+    <string name="dashboard_journal_title">Journal</string>
+    <string name="dashboard_journal_subtitle">Notez vos symptômes</string>
+    <string name="dashboard_humeur_title">Humeur</string>
+    <string name="dashboard_humeur_subtitle">Comment ça va?</string>
+    <string name="dashboard_education_title">Éducation</string>
+    <string name="dashboard_education_subtitle">Articles santé</string>
+    <string name="dashboard_communaute_title">Communauté</string>
+    <string name="dashboard_communaute_subtitle">Échangez avec d’autres</string>
+    <string name="dashboard_tip_title">Conseil du jour</string>
+    <string name="dashboard_tip_content">En phase fertile, restez bien hydratée et favorisez les aliments riches en acide folique comme les légumes verts.</string>
+    <string name="nav_home">Accueil</string>
+    <string name="nav_cycle">Cycle</string>
+    <string name="nav_calendar">Calendrier</string>
+    <string name="nav_community">Communauté</string>
+    <string name="nav_profile">Profil</string>
+    <string name="dashboard_symptoms_title">Symptômes aujourd\'hui</string>
+    <string name="dashboard_add_action">+ Ajouter</string>
+    <string name="symptom_cramp">Légère crampe</string>
+    <string name="symptom_fatigue">Fatigue</string>
+    <string name="symptom_mood">Humeur positive 😊</string>
+</resources>

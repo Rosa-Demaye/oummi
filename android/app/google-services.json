@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "755856210299",
+    "project_id": "oummi-5f68a",
+    "storage_bucket": "oummi-5f68a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755856210299:android:53cbf91f7bbc830b3165de",
+        "android_client_info": {
+          "package_name": "com.example.oummi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa6igxR8EQ2tKe610o8w4-JXvyWfbDmCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
