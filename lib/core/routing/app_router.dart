@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../features/splash/presentation/pages/splash_page.dart';
+import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
@@ -13,25 +15,39 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/login',
+    initialLocation: '/splash',
     refreshListenable: RouterNotifier(ref),
     redirect: (context, state) {
       final user = authState.value;
-      final isLoggingIn = state.matchedLocation == '/login';
-      final isRegistering = state.matchedLocation == '/register';
+      final location = state.matchedLocation;
+
+      // Always allow splash and onboarding
+      if (location == '/splash' || location == '/onboarding') {
+        return null;
+      }
+
+      final isAuth = location == '/login' || location == '/register';
 
       if (user == null) {
         // Not logged in
-        if (isLoggingIn || isRegistering) return null;
+        if (isAuth) return null;
         return '/login';
       }
 
       // Logged in
-      if (isLoggingIn || isRegistering) return '/';
-      
+      if (isAuth) return '/';
+
       return null;
     },
     routes: [
+      GoRoute(
+        path: '/splash',
+        builder: (context, state) => const SplashPage(),
+      ),
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => const OnboardingPage(),
+      ),
       GoRoute(
         path: '/login',
         builder: (context, state) => const LoginPage(),
@@ -48,7 +64,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   );
 });
 
-// Helper class to refresh GoRouter when auth state changes
 class RouterNotifier extends ChangeNotifier {
   final Ref _ref;
 

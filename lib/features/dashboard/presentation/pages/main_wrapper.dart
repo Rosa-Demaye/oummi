@@ -5,7 +5,10 @@ import '../../../auth/domain/entities/user_entity.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../pregnancy/presentation/pages/pregnancy_dashboard_page.dart';
 import 'dashboard_page.dart';
-import '../../../../features/cycle_tracking/presentation/pages/cycle_page.dart';
+import '../../../cycle_tracking/presentation/pages/cycle_page.dart';
+import '../../../dashboards/presentation/pages/doctor_dashboard.dart';
+import '../../../dashboards/presentation/pages/father_dashboard.dart';
+import '../../../dashboards/presentation/pages/young_woman_dashboard.dart';
 
 class MainWrapper extends ConsumerStatefulWidget {
   const MainWrapper({super.key});
@@ -17,21 +20,45 @@ class MainWrapper extends ConsumerStatefulWidget {
 class _MainWrapperState extends ConsumerState<MainWrapper> {
   int _currentIndex = 0;
 
+  Widget _buildHomeScreen(UserRole? role) {
+    switch (role) {
+      case UserRole.pregnant:
+        return const PregnancyDashboardPage();
+      case UserRole.doctor:
+        return const DoctorDashboard();
+      case UserRole.father:
+        return const FatherDashboard();
+      case UserRole.girl:
+        return const YoungWomanDashboard();
+      case UserRole.hospital:
+        return const DashboardPage();
+      case UserRole.admin:
+        return const DashboardPage();
+      case null:
+        return const DashboardPage();
+    }
+  }
+
+  bool _showCycleTab(UserRole? role) {
+    return role == UserRole.pregnant || role == UserRole.girl;
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(authStateProvider).value;
-    final isPregnant = user?.role == UserRole.pregnant;
+    final role = user?.role;
 
     final List<Widget> screens = [
-      isPregnant ? const PregnancyDashboardPage() : const DashboardPage(),
-      const CyclePage(),
-      const Center(child: Text('Rendez-vous')),
+      _buildHomeScreen(role),
+      if (_showCycleTab(role)) const CyclePage() else const Center(child: Text('Rendez-vous')),
       const Center(child: Text('Communauté')),
       const Center(child: Text('Profil')),
     ];
 
+    final activeIndex = _currentIndex.clamp(0, screens.length - 1);
+
     return Scaffold(
-      body: screens[_currentIndex],
+      body: screens[activeIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -47,7 +74,7 @@ class _MainWrapperState extends ConsumerState<MainWrapper> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: BottomNavigationBar(
-              currentIndex: _currentIndex,
+              currentIndex: activeIndex,
               onTap: (index) => setState(() => _currentIndex = index),
               type: BottomNavigationBarType.fixed,
               backgroundColor: Colors.transparent,
@@ -62,28 +89,30 @@ class _MainWrapperState extends ConsumerState<MainWrapper> {
                 fontWeight: FontWeight.w500,
                 fontSize: 12,
               ),
-              items: const [
-                BottomNavigationBarItem(
+              items: [
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.home_outlined, color: Colors.grey),
                   activeIcon: Icon(Icons.home, color: AppColors.primary),
                   label: 'Accueil',
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite_outline, color: Colors.grey),
-                  activeIcon: Icon(Icons.favorite, color: AppColors.primary),
-                  label: 'Santé',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.calendar_month_outlined, color: Colors.grey),
-                  activeIcon: Icon(Icons.calendar_month, color: AppColors.primary),
-                  label: 'RDV',
-                ),
-                BottomNavigationBarItem(
+                if (_showCycleTab(role))
+                  const BottomNavigationBarItem(
+                    icon: Icon(Icons.favorite_outline, color: Colors.grey),
+                    activeIcon: Icon(Icons.favorite, color: AppColors.primary),
+                    label: 'Santé',
+                  )
+                else
+                  const BottomNavigationBarItem(
+                    icon: Icon(Icons.calendar_month_outlined, color: Colors.grey),
+                    activeIcon: Icon(Icons.calendar_month, color: AppColors.primary),
+                    label: 'RDV',
+                  ),
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.people_outline, color: Colors.grey),
                   activeIcon: Icon(Icons.people, color: AppColors.primary),
                   label: 'Communauté',
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.person_outline, color: Colors.grey),
                   activeIcon: Icon(Icons.person, color: AppColors.primary),
                   label: 'Profil',

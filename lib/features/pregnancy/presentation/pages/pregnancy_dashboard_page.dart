@@ -15,6 +15,7 @@ class PregnancyDashboardPage extends ConsumerWidget {
     final contentRepo = PregnancyContentRepository();
 
     return Scaffold(
+      floatingActionButton: _buildEmergencyFab(context),
       body: pregnancyAsync.when(
         data: (data) {
           if (data == null) {
@@ -270,6 +271,81 @@ class PregnancyDashboardPage extends ConsumerWidget {
             style: const TextStyle(color: AppColors.textSecondary, height: 1.5),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildEmergencyFab(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [AppColors.error, Color(0xFFFF6B6B)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.error.withValues(alpha: 0.4),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: FloatingActionButton.extended(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+              title: const Row(
+                children: [
+                  Icon(Icons.emergency, color: AppColors.error),
+                  SizedBox(width: 12),
+                  Text('Urgence'),
+                ],
+              ),
+              content: const Text(
+                'Voulez-vous signaler une urgence médicale ? '
+                'Votre localisation sera partagée avec l\'hôpital le plus proche.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text('Annuler'),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.error,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Alerte urgence envoyée !'),
+                        backgroundColor: AppColors.error,
+                      ),
+                    );
+                  },
+                  child: const Text('alerter'),
+                ),
+              ],
+            ),
+          );
+        },
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        icon: const Icon(Icons.emergency, color: Colors.white, size: 24),
+        label: const Text(
+          'URGENCE',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.2,
+          ),
+        ),
       ),
     );
   }
