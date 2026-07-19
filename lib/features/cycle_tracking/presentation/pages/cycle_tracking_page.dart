@@ -33,7 +33,7 @@ class CycleTrackingPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 32),
-            
+
             // Calendar Container
             Container(
               padding: const EdgeInsets.all(20),
@@ -68,11 +68,11 @@ class CycleTrackingPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            
+
             // Ovulation Banner
             _buildOvulationBanner(),
             const SizedBox(height: 32),
-            
+
             // Mood Selector
             const Text('Comment vous sentez-vous ?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             const SizedBox(height: 16),
@@ -142,7 +142,7 @@ class CycleTrackingPage extends StatelessWidget {
         children: days.map((d) {
           Color? bgColor;
           Color textColor = Colors.black87;
-          
+
           if (redDays.contains(d)) {
             bgColor = Colors.red.shade400;
             textColor = Colors.white;

@@ -1,41 +1,32 @@
-# OUMMI Rebuild Task List
+# OUMMI System Restoration Task List
 
-## 1. Project Foundation & Structure
-- [x] Update `pubspec.yaml` with new dependencies
-- [x] Create Clean Architecture folder structure
-- [x] Implement Design System (Colors, Typography, Theme)
-- [x] Set up Core components (Router, Service Locator)
+## 1. Structural Fixes
+- [ ] Fix broken imports in `main_wrapper.dart`
+- [ ] Restore missing routes in `app_router.dart`
+- [ ] Restore missing initializations in `main.dart`
 
-## 2. Authentication & User Management
-- [ ] Implement Firebase Auth Repository
-- [ ] Create Auth State Providers (Riverpod)
-- [ ] Build Role Selection & Registration Flow
-- [ ] Implement Login & Password Recovery
+## 2. Feature Restoration - Tier 1 (Core & Dashboards)
+- [ ] Restore `notification_service.dart`
+- [ ] Restore `doctor_dashboard.dart`
+- [ ] Restore `father_dashboard.dart`
+- [ ] Restore `young_woman_dashboard.dart`
 
-## 3. Core Features - Women
-- [x] **Cycle Tracker Redesign**
-    - [x] Calendar Dashboard (TableCalendar)
-    - [x] Symptom & Mood Logging
-    - [x] AI Insight Cards
-    - [x] Add Symptom Bottom Sheet (Real-time data entry)
-- [x] **Pregnancy Module**
-    - [x] Implement `PregnancyRepository` (Firestore)
-    - [x] Create `PregnancyDashboardPage` (Premium UI)
-    - [x] Add Heartbeat Animation & Baby Size Visuals
-    - [x] Build `WeekDetailsPage`
-    - [ ] Implement Labor/Emergency Signal logic
+## 3. Feature Restoration - Tier 2 (Health & Risk)
+- [ ] Restore `RiskAssessment` & `Vitals` entities
+- [ ] Restore `RiskEngine` logic
+- [ ] Restore `MedicalEntry` entities
+- [ ] Restore Risk & Health Repositories/Providers
 
-## 4. Dashboards (Role-Based)
-- [ ] Doctor Dashboard
-- [ ] Father Dashboard
-- [ ] Hospital Dashboard
-- [ ] Admin Dashboard
+## 4. Feature Restoration - Tier 3 (Services & Community)
+- [ ] Restore Community (Entities, Repo, Providers, Pages)
+- [ ] Restore Appointments (Entities, Repo, Providers)
+- [ ] Restore Teleconsultation (Entities, Repo, Providers)
 
-## 5. Integration & Polish
-- [x] Connect Firebase Firestore for data-driven UI
-    - [x] Implement `CycleRepository` for Firestore
-    - [x] Create Riverpod providers for Cycle data
-    - [x] Update `CyclePage` to use real-time data
-- [ ] Implement Push Notifications (FCM)
-- [ ] Add Lottie animations and smooth transitions
-- [ ] Final Analysis & Cleanup
+## 5. Feature Restoration - Tier 4 (Emergencies & Admin)
+- [ ] Restore Emergencies (Entities, Repo, Providers)
+- [ ] Restore Admin Oversight (Entities, Repo, Providers, Page)
+
+## 6. Final Verification
+- [ ] Fix any remaining analysis errors
+- [ ] Verify build system configuration (SDK 36)
+- [ ] Final `flutter analyze` audit

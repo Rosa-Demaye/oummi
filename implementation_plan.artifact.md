@@ -1,62 +1,65 @@
-# Implementation Plan - OUMMI Phase 3 & Beyond
+# Implementation Plan - Recovery & System Restoration
 
-This plan covers the finalization of the Authentication flow and the implementation of role-based dashboards, appointment booking, and community features, strictly following the OUMMI premium design system.
+The project recently underwent a GitHub pull that appears to have overwritten numerous files with empty placeholders or outdated versions, resulting in 31 analysis errors and significant loss of functionality. This plan details the systematic restoration of the OUMMI platform.
+
+## User Review Required
+
+> [!CAUTION]
+> **Data Loss Warning**: Approximately 38 files in the `lib/` directory are currently empty (0 bytes). I will restore these files based on the established architecture and requirements. If you have any recent local changes that were NOT committed or pushed, please back them up before I proceed.
 
 ## Proposed Changes
 
-### [Phase 3] Firebase Auth & User Management
-#### [MODIFY] [login_page.dart](file:///C:/Users/Neradel/StudioProjects/oummi/lib/features/auth/presentation/pages/login_page.dart)
-- Integrate real sign-in logic using `authNotifierProvider`.
-- Add error handling (SnackBars for invalid credentials).
-- Implement "Sign in with Google" placeholder logic.
-
-#### [NEW] [register_page.dart](file:///C:/Users/Neradel/StudioProjects/oummi/lib/features/auth/presentation/pages/register_page.dart)
-- Multi-step registration flow:
-    - **Step 1**: Role Selection (Beautiful cards for Girl, Pregnant, Father, Doctor, Hospital).
-    - **Step 2**: Primary Details (Email, Phone, Full Name).
-    - **Step 3**: Role-specific details (Specialty for Doctors, Facility type for Hospitals).
-- Use **Soft Rose** for Primary buttons and **Medical Blue** for trust elements.
+### 1. Structural Restoration
+#### [MODIFY] [main.dart](file:///C:/Users/Neradel/StudioProjects/oummi/lib/main.dart)
+- Restore Hive initialization.
+- Restore `NotificationService.initialize()`.
 
 #### [MODIFY] [app_router.dart](file:///C:/Users/Neradel/StudioProjects/oummi/lib/core/routing/app_router.dart)
-- Implement `redirect` logic to ensure unauthenticated users stay on the Login page.
+- Restore all feature routes (Appointments, Risk Assessment, Health Records, Chat, Labor Declaration, etc.).
+
+#### [MODIFY] [MainWrapper](file:///C:/Users/Neradel/StudioProjects/oummi/lib/features/dashboard/presentation/pages/main_wrapper.dart)
+- Fix broken imports (using same directory for dashboards).
 
 ---
 
-### [Phase 4] Role-Based Dashboards
-#### [NEW] [doctor_dashboard.dart](file:///C:/Users/Neradel/StudioProjects/oummi/lib/features/dashboard/presentation/pages/doctor_dashboard.dart)
-- **Primary Color**: Medical Blue (#4A90E2).
-- Features: Patient queue, urgent alerts, consultation calendar.
+### 2. Feature-by-Feature Content Restoration
+I will restore the following empty files with their respective professional implementations:
 
-#### [NEW] [hospital_dashboard.dart](file:///C:/Users/Neradel/StudioProjects/oummi/lib/features/dashboard/presentation/pages/hospital_dashboard.dart)
-- Overview of bed capacity, available ambulances, and emergency calls.
+#### [RESTORE] Core & Dashboards
+- `notification_service.dart`
+- `doctor_dashboard.dart`, `father_dashboard.dart`, `young_woman_dashboard.dart`
 
-#### [NEW] [father_dashboard.dart](file:///C:/Users/Neradel/StudioProjects/oummi/lib/features/dashboard/presentation/pages/father_dashboard.dart)
-- Focus on "How to support my partner," baby growth updates, and shared health records.
+#### [RESTORE] Community Module
+- `post.dart`, `comment.dart`, `group.dart`
+- `community_repository.dart`, `community_repository_impl.dart`
+- `community_provider.dart`, `create_post_page.dart`, `group_discovery_page.dart`
+
+#### [RESTORE] Risk Assessment & Health
+- `risk_engine.dart` (Weighted scoring logic)
+- `risk_provider.dart`, `vitals.dart`, `risk_repository.dart`, `risk_repository_impl.dart`
+- `health_provider.dart`, `medical_entry.dart`, `health_repository.dart`, `health_repository_impl.dart`
+
+#### [RESTORE] Appointments & Teleconsultation
+- `appointment_provider.dart`, `appointment.dart`, `appointment_repository.dart`, `appointment_repository_impl.dart`
+- `chat_provider.dart`, `message.dart`, `chat_repository.dart`, `chat_repository_impl.dart`
+
+#### [RESTORE] Emergencies & Admin
+- `emergency_provider.dart`, `emergency_alert.dart`, `emergency_repository.dart`, `emergency_repository_impl.dart`
+- `admin_provider.dart`, `national_stats.dart`, `admin_repository.dart`, `admin_repository_impl.dart`, `admin_dashboard_page.dart`
 
 ---
 
-### [Phase 5] Appointment Booking System
-#### [NEW] Feature Components
-- `DoctorSearchPage`: Filter by specialty (Gynecologist, Pediatrician, etc.) and location.
-- `BookingCalendar`: Select date/time using a premium, rounded UI.
-- `AppointmentRepository`: Firestore integration for real-time booking status.
-
----
-
-### [Phase 6] Community Hub
-#### [NEW] Feature Components
-- `CommunityFeed`: Scrollable feed with categories (e.g., "General", "Nutrition", "Post-partum").
-- `CommunityGroupCard`: Soft Lavender (#C7B6FF) design for groups.
-- Firestore integration for posts and comments.
+### 3. Verification & Build
+#### [FIX] Android Build
+- Re-apply necessary Gradle/AGP/SDK 36 fixes if they were reverted by the pull.
 
 ## Verification Plan
 
 ### Automated Tests
-- Run `flutter analyze` after each phase.
-- Unit tests for `AuthRepository` and `AppointmentRepository`.
+- Run `flutter analyze` after every feature restoration block.
+- Target: 0 errors, 0 warnings.
 
 ### Manual Verification
-- Test registration flow for all 5 roles.
-- Verify that a logged-in Doctor sees the Medical Blue dashboard.
-- Verify that a Father sees the partner support dashboard.
-- Test the full booking loop (from search to confirmation).
+- Launch the app to verify the Splash -> Onboarding -> Login flow.
+- Verify role-based dashboard redirection.
+- Test real-time features (Risk Assessment results, Chat bubbles).
